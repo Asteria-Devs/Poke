@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vanity Links Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #000000, #ff8c00);
+      background-size: 400% 400%;
+      animation: gradientShift 30s ease infinite;
+      color: white;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .image-link {
+      display: block;
+      border: 2px solid white;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .image-link:hover {
+      transform: scale(1.05);
+      border-color: orange;
+    }
+
+    .image-link img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .links {
+      text-align: center;
+    }
+
+    .links a {
+      color: orange;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .links a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to My Vanity Links Page</h1>
+
+    <div class="image-grid">
+      <a href="page1.html" class="image-link">
+        <img src="placeholder1.jpg" alt="Placeholder 1">
+      </a>
+      <a href="page2.html" class="image-link">
+        <img src="placeholder2.jpg" alt="Placeholder 2">
+      </a>
+      <a href="page3.html" class="image-link">
+        <img src="placeholder3.jpg" alt="Placeholder 3">
+      </a>
+      <!-- Add more as needed -->
+    </div>
+
+    <div class="links">
+      <a href="#">Link One</a>
+      <a href="#">Link Two</a>
+      <a href="#">Link Three</a>
+    </div>
+  </div>
+</body>
+</html>
 
