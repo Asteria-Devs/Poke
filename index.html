@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Poke Seller</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #000000, #4b0082);
+      background: linear-gradient(to bottom right, red, gold);
       color: white;
     }
 
@@ -29,7 +29,9 @@
     }
 
     .card {
-      background: linear-gradient(135deg, gold, red);
+      background-color: #6a0dad;
+      background-image: radial-gradient(black 1px, transparent 1px);
+      background-size: 20px 20px;
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -60,8 +62,10 @@
       display: none;
       position: fixed;
       z-index: 100;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.8);
       justify-content: center;
       align-items: center;
@@ -103,20 +107,26 @@
   </style>
 </head>
 <body>
-
   <header>STARDUST</header>
 
   <div class="grid">
     <!--1 Million stardust-->
     <div class="card" onclick="showModal('1 million stardust' , 'With stardust pieces you will get 439k a day as that’s the limit so I would need to be 2 days to do this, but I wont use your account the full days! It only costs £14.45 ' , 'https://www.ebay.co.uk/itm/388420285433?stype=1&var=&widget_ver=artemis&media')">
-      <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/Stardust.png">
+      <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/Stardust.png" alt="1 Million Stardust">
       <div class="card-content">
         <div class="card-title">1 Million Stardust</div>
-        <p>1 Million stardust delivered within 2 days! </p>
+        <p>1 Million stardust delivered within 2 days!</p>
       </div>
     </div>
 
-
+    <!-- Product 2 -->
+    <div class="card" onclick="showModal('Product 2', 'This is a detailed description of Product 2.', 'https://www.ebay.com/itm/PRODUCT2ID')">
+      <img src="https://via.placeholder.com/300x200.png?text=Product+2" alt="Product 2">
+      <div class="card-content">
+        <div class="card-title">Product 2</div>
+        <p>Quick summary here</p>
+      </div>
+    </div>
   </div>
 
   <!-- Modal -->
@@ -141,6 +151,5 @@
       document.getElementById('modal').style.display = 'none';
     }
   </script>
-
 </body>
 </html>
