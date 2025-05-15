@@ -8,20 +8,50 @@
   html, body {
     margin: 0; padding: 0; height: 100%;
     font-family: 'Segoe UI', sans-serif;
-    background: black;
-    overflow-x: hidden;
+    background: radial-gradient(ellipse at center, #0b0c27 0%, #000000 70%);
     color: white;
+    overflow-x: hidden;
   }
 
-  /* Galaxy canvas covers whole screen but is fixed behind content */
-  #galaxy-bg {
+  /* Static starfield with larger stars randomly placed */
+  body::before {
+    content: "";
     position: fixed;
     top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* So clicks pass through */
-    z-index: -10; /* Very behind */
-    display: block;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    background:
+      radial-gradient(2px 2px at 20% 15%, white, transparent),
+      radial-gradient(1.5px 1.5px at 35% 25%, #ccc, transparent),
+      radial-gradient(2.5px 2.5px at 50% 50%, #fff, transparent),
+      radial-gradient(2px 2px at 65% 60%, #eee, transparent),
+      radial-gradient(1.8px 1.8px at 80% 30%, #ddd, transparent),
+      radial-gradient(2.2px 2.2px at 10% 70%, #fff, transparent),
+      radial-gradient(1.3px 1.3px at 85% 80%, #ccc, transparent),
+      radial-gradient(1.7px 1.7px at 40% 75%, #fff, transparent);
+    background-repeat: no-repeat;
+    background-color: #0b0c27;
+  }
+
+  /* subtle swirling nebula effect with slow rotating gradient overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: -2;
+    background:
+      radial-gradient(circle at 25% 25%, rgba(139,0,255,0.25), transparent 60%),
+      radial-gradient(circle at 75% 40%, rgba(255,215,0,0.15), transparent 70%),
+      radial-gradient(circle at 50% 75%, rgba(138,43,226,0.2), transparent 70%);
+    animation: swirl 90s linear infinite;
+  }
+
+  @keyframes swirl {
+    from { transform: rotate(0deg) scale(1.05); }
+    to { transform: rotate(360deg) scale(1.05); }
   }
 
   header {
@@ -135,8 +165,6 @@
 </head>
 <body>
 
-<canvas id="galaxy-bg"></canvas>
-
 <header>STARDUST</header>
 
 <div class="grid">
@@ -167,7 +195,6 @@
 </div>
 
 <script>
-  // Modal functions
   function showModal(title, description, link) {
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-desc').textContent = description;
@@ -177,94 +204,6 @@
   function hideModal() {
     document.getElementById('modal').style.display = 'none';
   }
-
-  // Galaxy background animation (simplified)
-  const canvas = document.getElementById('galaxy-bg');
-  const ctx = canvas.getContext('2d');
-  let width, height;
-
-  function random(min, max) {
-    return Math.random() * (max - min) + min;
-  }
-
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  class Star {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.radius = random(0.8, 1.8);
-      this.opacity = random(0.2, 1);
-      this.twinkleSpeed = random(0.005, 0.015);
-      this.increasing = Math.random() > 0.5;
-    }
-    draw() {
-      ctx.beginPath();
-      ctx.shadowColor = 'white';
-      ctx.shadowBlur = 10;
-      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-    update() {
-      if (this.increasing) {
-        this.opacity += this.twinkleSpeed;
-        if (this.opacity >= 1) this.increasing = false;
-      } else {
-        this.opacity -= this.twinkleSpeed;
-        if (this.opacity <= 0.2) this.increasing = true;
-      }
-    }
-  }
-
-  class Nebula {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * height;
-      this.radius = random(150, 300);
-      this.color = `hsla(${random(240, 300)}, 70%, 60%, 0.15)`;
-      this.angle = Math.random() * 2 * Math.PI;
-      this.speed = random(0.0004, 0.001);
-    }
-    draw() {
-      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
-      grad.addColorStop(0, this.color);
-      grad.addColorStop(1, 'transparent');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-    update() {
-      this.angle += this.speed;
-      this.x += Math.cos(this.angle) * 0.05;
-      this.y += Math.sin(this.angle) * 0.05;
-    }
-  }
-
-  const stars = [];
-  const nebulae = [];
-
-  for (let i = 0; i < 120; i++) stars.push(new Star());
-  for (let i = 0; i < 5; i++) nebulae.push(new Nebula());
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-
-    nebulae.forEach(n => { n.update(); n.draw(); });
-    stars.forEach(s => { s.update(); s.draw(); });
-
-    requestAnimationFrame(animate);
-  }
-
-  animate();
 </script>
 
 </body>
