@@ -8,7 +8,6 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      /* Darker gradient for dimmer background */
       background: linear-gradient(to bottom right, #2a0000, #4a3100);
       color: white;
     }
@@ -31,8 +30,18 @@
 
     .card {
       background-color: #4b0082;
-      /* Star pattern with bigger black stars randomly positioned */
-      background-image: url('data:image/svg+xml;utf8,<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><polygon points="10,15 12,22 19,22 13,27 15,34 10,29 5,34 7,27 1,22 8,22" fill="black" /><polygon points="60,40 62,47 69,47 63,52 65,59 60,54 55,59 57,52 51,47 58,47" fill="black" /><polygon points="130,120 132,127 139,127 133,132 135,139 130,134 125,139 127,132 121,127 128,127" fill="black" /><polygon points="160,70 162,77 169,77 163,82 165,89 160,84 155,89 157,82 151,77 158,77" fill="black" /><polygon points="100,180 102,187 109,187 103,192 105,199 100,194 95,199 97,192 91,187 98,187" fill="black" /></svg>');
+      background-image: url('data:image/svg+xml;utf8,<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">' +
+        '<polygon points="10,15 12,22 19,22 13,27 15,34 10,29 5,34 7,27 1,22 8,22" fill="black" />' +
+        '<polygon points="30,60 32,67 39,67 33,72 35,79 30,74 25,79 27,72 21,67 28,67" fill="black" />' +
+        '<polygon points="60,40 62,47 69,47 63,52 65,59 60,54 55,59 57,52 51,47 58,47" fill="black" />' +
+        '<polygon points="80,10 82,17 89,17 83,22 85,29 80,24 75,29 77,22 71,17 78,17" fill="black" />' +
+        '<polygon points="110,30 112,37 119,37 113,42 115,49 110,44 105,49 107,42 101,37 108,37" fill="black" />' +
+        '<polygon points="130,120 132,127 139,127 133,132 135,139 130,134 125,139 127,132 121,127 128,127" fill="black" />' +
+        '<polygon points="150,160 152,167 159,167 153,172 155,179 150,174 145,179 147,172 141,167 148,167" fill="black" />' +
+        '<polygon points="160,70 162,77 169,77 163,82 165,89 160,84 155,89 157,82 151,77 158,77" fill="black" />' +
+        '<polygon points="180,130 182,137 189,137 183,142 185,149 180,144 175,149 177,142 171,137 178,137" fill="black" />' +
+        '<polygon points="100,180 102,187 109,187 103,192 105,199 100,194 95,199 97,192 91,187 98,187" fill="black" />' +
+      '</svg>');
       background-repeat: no-repeat;
       background-size: 200px 200px;
       border-radius: 16px;
