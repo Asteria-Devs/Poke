@@ -5,22 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Poke Seller</title>
 <style>
-  /* Reset and fonts */
-  body, html {
+  html, body {
     margin: 0; padding: 0; height: 100%;
     font-family: 'Segoe UI', sans-serif;
+    background: black;
     overflow-x: hidden;
     color: white;
-    background: #000;
   }
 
-  /* Fullscreen canvas for galaxy */
+  /* Galaxy canvas covers whole screen but is fixed behind content */
   #galaxy-bg {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* So clicks pass through */
+    z-index: -10; /* Very behind */
     display: block;
-    background: black;
   }
 
   header {
@@ -28,8 +29,8 @@
     padding: 2rem;
     font-size: 2rem;
     font-weight: bold;
-    z-index: 10;
     position: relative;
+    z-index: 10;
   }
 
   .grid {
@@ -133,6 +134,7 @@
 </style>
 </head>
 <body>
+
 <canvas id="galaxy-bg"></canvas>
 
 <header>STARDUST</header>
@@ -165,7 +167,7 @@
 </div>
 
 <script>
-  // Modal show/hide
+  // Modal functions
   function showModal(title, description, link) {
     document.getElementById('modal-title').textContent = title;
     document.getElementById('modal-desc').textContent = description;
@@ -176,12 +178,10 @@
     document.getElementById('modal').style.display = 'none';
   }
 
-  // Galaxy Background Animation
+  // Galaxy background animation (simplified)
   const canvas = document.getElementById('galaxy-bg');
   const ctx = canvas.getContext('2d');
   let width, height;
-  let stars = [];
-  let nebulae = [];
 
   function random(min, max) {
     return Math.random() * (max - min) + min;
@@ -193,46 +193,37 @@
     canvas.width = width;
     canvas.height = height;
   }
-
   window.addEventListener('resize', resize);
   resize();
 
-  // Star class
   class Star {
     constructor() {
       this.x = Math.random() * width;
       this.y = Math.random() * height;
-      this.radius = random(0.5, 1.5);
-      this.twinkleSpeed = random(0.01, 0.03);
-      this.opacity = Math.random();
+      this.radius = random(0.8, 1.8);
+      this.opacity = random(0.2, 1);
+      this.twinkleSpeed = random(0.005, 0.015);
       this.increasing = Math.random() > 0.5;
     }
     draw() {
       ctx.beginPath();
-      ctx.fillStyle = `rgba(255,255,255,${this.opacity})`;
       ctx.shadowColor = 'white';
-      ctx.shadowBlur = 5;
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.shadowBlur = 10;
+      ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
       ctx.fill();
     }
     update() {
       if (this.increasing) {
         this.opacity += this.twinkleSpeed;
-        if (this.opacity >= 1) {
-          this.opacity = 1;
-          this.increasing = false;
-        }
+        if (this.opacity >= 1) this.increasing = false;
       } else {
         this.opacity -= this.twinkleSpeed;
-        if (this.opacity <= 0.1) {
-          this.opacity = 0.1;
-          this.increasing = true;
-        }
+        if (this.opacity <= 0.2) this.increasing = true;
       }
     }
   }
 
-  // Nebula class (swirling colored clouds)
   class Nebula {
     constructor() {
       this.x = Math.random() * width;
@@ -240,53 +231,41 @@
       this.radius = random(150, 300);
       this.color = `hsla(${random(240, 300)}, 70%, 60%, 0.15)`;
       this.angle = Math.random() * 2 * Math.PI;
-      this.speed = random(0.0005, 0.0015);
+      this.speed = random(0.0004, 0.001);
     }
     draw() {
-      let grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+      const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
       grad.addColorStop(0, this.color);
       grad.addColorStop(1, 'transparent');
       ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
       ctx.fill();
     }
     update() {
       this.angle += this.speed;
-      // Slightly move position in a swirl pattern
-      this.x += Math.cos(this.angle) * 0.1;
-      this.y += Math.sin(this.angle) * 0.1;
+      this.x += Math.cos(this.angle) * 0.05;
+      this.y += Math.sin(this.angle) * 0.05;
     }
   }
 
-  // Setup stars and nebulae
-  for (let i = 0; i < 150; i++) {
-    stars.push(new Star());
-  }
-  for (let i = 0; i < 6; i++) {
-    nebulae.push(new Nebula());
-  }
+  const stars = [];
+  const nebulae = [];
 
-  // Animation loop
+  for (let i = 0; i < 120; i++) stars.push(new Star());
+  for (let i = 0; i < 5; i++) nebulae.push(new Nebula());
+
   function animate() {
     ctx.clearRect(0, 0, width, height);
 
-    // Draw nebulae first for layering behind stars
-    nebulae.forEach(n => {
-      n.update();
-      n.draw();
-    });
-
-    // Draw stars
-    stars.forEach(s => {
-      s.update();
-      s.draw();
-    });
+    nebulae.forEach(n => { n.update(); n.draw(); });
+    stars.forEach(s => { s.update(); s.draw(); });
 
     requestAnimationFrame(animate);
   }
 
   animate();
 </script>
+
 </body>
 </html>
