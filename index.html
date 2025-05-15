@@ -1,170 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Poke Seller</title>
-<style>
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(to bottom right, #000000, #4b0082);
-    color: white;
-    overflow-x: hidden;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Poke Seller</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #4b0000, #8b5a00);
+      color: white;
+    }
 
-  /* Purple cards with black star pattern */
-  .card {
-    background-color: #4b0082;
-    background-image: url("data:image/svg+xml;utf8,
-      <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'>
-        <polygon points='10,0 12,7 20,7 13.5,11 16,18 10,13.5 4,18 6.5,11 0,7 8,7'
-          fill='black' opacity='0.7' transform='translate(20,30) scale(0.8)'/>
-        <polygon points='10,0 12,7 20,7 13.5,11 16,18 10,13.5 4,18 6.5,11 0,7 8,7'
-          fill='black' opacity='0.5' transform='translate(120,60) scale(1.2)'/>
-        <polygon points='10,0 12,7 20,7 13.5,11 16,18 10,13.5 4,18 6.5,11 0,7 8,7'
-          fill='black' opacity='0.6' transform='translate(70,140) scale(1)'/>
-        <polygon points='10,0 12,7 20,7 13.5,11 16,18 10,13.5 4,18 6.5,11 0,7 8,7'
-          fill='black' opacity='0.5' transform='translate(160,100) scale(0.9)'/>
-        <polygon points='10,0 12,7 20,7 13.5,11 16,18 10,13.5 4,18 6.5,11 0,7 8,7'
-          fill='black' opacity='0.4' transform='translate(100,180) scale(1.1)'/>
-      </svg>");
-    background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-    transition: transform 0.2s;
-    cursor: pointer;
-  }
+    header {
+      text-align: center;
+      padding: 2rem;
+      font-size: 2rem;
+      font-weight: bold;
+    }
 
-  .card:hover {
-    transform: scale(1.03);
-  }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-  .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
+    .card {
+      background-color: #4b0082;
+      background-image: url('data:image/svg+xml;utf8,<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="30" r="2" fill="black" /><circle cx="120" cy="50" r="3" fill="black" /><circle cx="60" cy="140" r="2.5" fill="black" /><circle cx="160" cy="90" r="2" fill="black" /><circle cx="100" cy="180" r="3" fill="black" /></svg>');
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
 
-  .card-content {
-    padding: 1rem;
-  }
+    .card:hover {
+      transform: scale(1.03);
+    }
 
-  .card-title {
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem;
-  }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
 
-  header {
-    text-align: center;
-    padding: 2rem;
-    font-size: 2rem;
-    font-weight: bold;
-    position: relative;
-    z-index: 10;
-  }
+    .card-content {
+      padding: 1rem;
+    }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem;
-    max-width: 1200px;
-    margin: auto;
-    position: relative;
-    z-index: 10;
-  }
+    .card-title {
+      font-size: 1.25rem;
+      margin: 0 0 0.5rem;
+    }
 
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 100;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    justify-content: center;
-    align-items: center;
-  }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
 
-  .modal-content {
-    background: #1a1a2e;
-    color: white;
-    padding: 2rem;
-    border-radius: 12px;
-    max-width: 500px;
-    text-align: center;
-    position: relative;
-  }
+    .modal-content {
+      background: #1a1a2e;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+    }
 
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-    font-size: 1.2rem;
-  }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
 
-  .buy-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    background: #7b2cbf;
-    color: white;
-    padding: 0.5rem 1.2rem;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: background 0.3s;
-  }
+    .buy-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #7b2cbf;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
 
-  .buy-btn:hover {
-    background: #9d4edd;
-  }
-</style>
+    .buy-btn:hover {
+      background: #9d4edd;
+    }
+  </style>
 </head>
 <body>
+  <header>STARDUST</header>
 
-<header>STARDUST</header>
+  <div class="grid">
+    <!--1 Million stardust-->
+    <div class="card" onclick="showModal('1 million stardust' , 'With stardust pieces you will get 439k a day as that’s the limit so I would need to be 2 days to do this, but I wont use your account the full days! It only costs £14.45' , 'https://www.ebay.co.uk/itm/388420285433?stype=1&var=&widget_ver=artemis&media')">
+      <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/Stardust.png" alt="1 Million Stardust">
+      <div class="card-content">
+        <div class="card-title">1 Million Stardust</div>
+        <p>1 Million stardust delivered within 2 days!</p>
+      </div>
+    </div>
 
-<div class="grid">
-  <div class="card" onclick="showModal('1 million stardust', 'With stardust pieces you will get 439k a day as that’s the limit so I would need to be 2 days to do this, but I won’t use your account the full days! It only costs £14.45', 'https://www.ebay.co.uk/itm/388420285433?stype=1&var=&widget_ver=artemis&media')">
-    <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/Stardust.png" alt="1 Million Stardust" />
-    <div class="card-content">
-      <div class="card-title">1 Million Stardust</div>
-      <p>1 Million stardust delivered within 2 days!</p>
+    <!-- Product 2 -->
+    <div class="card" onclick="showModal('Product 2', 'This is a detailed description of Product 2.', 'https://www.ebay.com/itm/PRODUCT2ID')">
+      <img src="https://via.placeholder.com/300x200.png?text=Product+2" alt="Product 2">
+      <div class="card-content">
+        <div class="card-title">Product 2</div>
+        <p>Quick summary here</p>
+      </div>
     </div>
   </div>
 
-  <div class="card" onclick="showModal('Product 2', 'This is a detailed description of Product 2.', 'https://www.ebay.com/itm/PRODUCT2ID')">
-    <img src="https://via.placeholder.com/300x200.png?text=Product+2" alt="Product 2" />
-    <div class="card-content">
-      <div class="card-title">Product 2</div>
-      <p>Quick summary here</p>
+  <!-- Modal -->
+  <div id="modal" class="modal" onclick="hideModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="hideModal()">✖</span>
+      <h2 id="modal-title">Title</h2>
+      <p id="modal-desc">Description</p>
+      <a id="modal-link" class="buy-btn" target="_blank">Buy on eBay</a>
     </div>
   </div>
-</div>
 
-<div id="modal" class="modal" onclick="hideModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <span class="close-btn" onclick="hideModal()">✖</span>
-    <h2 id="modal-title">Title</h2>
-    <p id="modal-desc">Description</p>
-    <a id="modal-link" class="buy-btn" target="_blank">Buy on eBay</a>
-  </div>
-</div>
+  <script>
+    function showModal(title, description, link) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-desc').textContent = description;
+      document.getElementById('modal-link').href = link;
+      document.getElementById('modal').style.display = 'flex';
+    }
 
-<script>
-  function showModal(title, description, link) {
-    document.getElementById('modal-title').textContent = title;
-    document.getElementById('modal-desc').textContent = description;
-    document.getElementById('modal-link').href = link;
-    document.getElementById('modal').style.display = 'flex';
-  }
-  function hideModal() {
-    document.getElementById('modal').style.display = 'none';
-  }
-</script>
-
+    function hideModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
