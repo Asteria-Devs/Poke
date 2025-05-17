@@ -69,12 +69,47 @@
       font-weight: bold;
       box-shadow: 0 0 15px rgba(75, 0, 130, 0.8);
       transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 3rem;
     }
 
     .back-link:hover,
     .back-link:focus {
       background-color: #6a1b9a;
       box-shadow: 0 0 25px rgba(106, 27, 154, 1);
+      outline: none;
+    }
+
+    /* Placards container */
+    .placards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Individual placard */
+    .placard {
+      background: rgba(75, 0, 130, 0.85);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      flex: 1 1 200px;
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.4;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.3s ease;
+    }
+
+    .placard:hover,
+    .placard:focus {
+      background: rgba(106, 27, 154, 0.95);
       outline: none;
     }
   </style>
@@ -89,6 +124,19 @@
   </p>
 
   <a href="index.html" class="back-link" tabindex="0" title="Back to main store page">← Back to Store</a>
+
+  <div class="placards">
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 1">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 2">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 3">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 4">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 5">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 6">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 7">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 8">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 9">Coming soon!</a>
+    <a class="placard" href="#" tabindex="0" aria-label="Coming soon placard 10">Coming soon!</a>
+  </div>
 
   <script>
     // Generate animated stars for background
