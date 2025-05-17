@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The BEST Pokemon Go store!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom right, #2a0000, #4a3100);
+      z-index: -2;
+    }
+
+    #stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+      );
+      opacity: 0.6;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.1; }
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      font-size: 2rem;
+      font-weight: bold;
+      z-index: 1;
+      position: relative;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .card {
+      background-color: #4b0082;
+      background-image: url('data:image/svg+xml;utf8,<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg"><polygon points="10,15 12,22 19,22 13,27 15,34 10,29 5,34 7,27 1,22 8,22" fill="black" /></svg>');
+      background-repeat: no-repeat;
+      background-size: 200px 200px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s;
+      cursor: pointer;
+      flex: 1 1 auto;
+      max-width: 350px;
+    }
+
+    .card:nth-child(1) { flex-basis: 350px; }
+    .card:nth-child(2) { flex-basis: 300px; }
+    .card:nth-child(3) { flex-basis: 250px; }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1a1a2e;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      text-align: center;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .buy-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #7b2cbf;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .buy-btn:hover {
+      background: #9d4edd;
+    }
+  </style>
+</head>
+<body>
+  <div id="stars"></div>
+
+  <header>The BEST Pokemon Go Store!</header>
+
+  <div class="grid">
+    <!-- Card 1 -->
+    <div class="card" onclick="showModal(
+      '1 million stardust',
+      'With stardust pieces you will get 439k a day as that’s the limit so I would need to be 2 days to do this, but I won’t use your account the full days! It only costs £14.45',
+      'https://www.ebay.co.uk/itm/388420285433?stype=1&var=&widget_ver=artemis&media')">
+      <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/Stardust.png" alt="1 Million Stardust" />
+      <div class="card-content">
+        <div class="card-title">1 Million Stardust</div>
+        <p>1 Million stardust delivered within 2 days!</p>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card" onclick="showModal(
+      '400K stardust',
+      'We will grind 400k stardust for your account!',
+      'https://www.ebay.co.uk/itm/388396513689?itmmeta=01JVCWZAR8ETEM3ZMBF0T6VR0A&hash=item5a6e3c7999:g:X6QAAeSwJnhoH4rI')">
+      <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/400kDust.png" alt="400k Stardust" />
+      <div class="card-content">
+        <div class="card-title">400k Stardust</div>
+        <p>400k Stardust delivered quickly!!</p>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card" onclick="showModal(
+      'T5 Raids',
+      'Take on the latest Tier 5 Raid Boss with this trusted service! These raids feature some challenging and sought-after Pokémon in Pokémon GO, perfect for PvP and PvE enthusiasts.',
+      'https://www.ebay.co.uk/itm/388396775817?itmmeta=01JVCWZAR8FT7QP43ZY9SCWK3B')">
+      <img src="https://raw.githubusercontent.com/Asteria-Devs/Poke/main/Legends.jpg" alt="Tier 5 Raids" />
+      <div class="card-content">
+        <div class="card-title">T5 Raids</div>
+        <p>Tier 5 raids completed for you!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" onclick="hideModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="hideModal()">✖</span>
+      <h2 id="modal-title">Title</h2>
+      <p id="modal-desc">Description</p>
+      <a id="modal-link" class="buy-btn" target="_blank">Buy on eBay</a>
+    </div>
+  </div>
+
+  <script>
+    function showModal(title, description, link) {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-desc').textContent = description;
+      document.getElementById('modal-link').href = link;
+      document.getElementById('modal').style.display = 'flex';
+    }
+
+    function hideModal() {
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    // Generate animated stars
+    const starCount = 150;
+    const starContainer = document.getElementById('stars');
+
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 5 + 2 + 'px';
+      star.style.width = size;
+      star.style.height = size;
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      starContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
