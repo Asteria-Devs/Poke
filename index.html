@@ -11,14 +11,7 @@
       color: white;
       position: relative;
       overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
       background: linear-gradient(to bottom right, #2a0000, #ff6600);
-      z-index: -2;
     }
 
     #stars {
@@ -51,8 +44,110 @@
       padding: 2rem;
       font-size: 2rem;
       font-weight: bold;
-      z-index: 1;
       position: relative;
+      z-index: 1;
+    }
+
+    h2.contact-info {
+      text-align: center;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Accounts Placard */
+    .accounts-placard {
+      max-width: 800px;
+      margin: 2rem auto 3rem;
+      padding: 2rem;
+      background: #1a1a2e;
+      color: white;
+      text-align: center;
+      position: relative;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(106, 13, 173, 0.6);
+      overflow: hidden;
+      transition: box-shadow 0.4s ease;
+      z-index: 1;
+      cursor: default;
+    }
+
+    .accounts-placard:hover {
+      box-shadow:
+        0 0 25px rgba(255, 215, 0, 0.9),
+        0 0 40px rgba(106, 13, 173, 0.9);
+    }
+
+    .accounts-placard::before,
+    .accounts-placard::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      border-radius: 12px;
+    }
+
+    .accounts-placard::before {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-top: 4px solid #6a0dad;
+      border-left: 4px solid black;
+      box-sizing: border-box;
+      mix-blend-mode: lighten;
+      border-radius: 12px 0 0 12px;
+    }
+
+    .accounts-placard::after {
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      border-bottom: 4px solid black;
+      border-right: 4px solid #6a0dad;
+      box-sizing: border-box;
+      mix-blend-mode: lighten;
+      border-radius: 0 12px 12px 0;
+    }
+
+    /* Falling stars container */
+    .falling-stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 1;
+    }
+
+    /* Star style */
+    .falling-stars .star {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: gold;
+      border-radius: 50%;
+      opacity: 0;
+      animation: fall 1.2s ease-in forwards;
+      box-shadow: 0 0 6px 2px gold;
+    }
+
+    /* Star fall animation */
+    @keyframes fall {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(200px) scale(0.5);
+        opacity: 0;
+      }
     }
 
     .main-grid {
@@ -60,6 +155,8 @@
       grid-template-columns: 1fr 3fr 1fr;
       gap: 1rem;
       padding: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
     .grid {
@@ -197,10 +294,17 @@
   <div id="stars"></div>
 
   <header>The BEST Pokemon Go Store!</header>
-<h2 style="text-align: center; margin-top: 2rem;">
-  Contact me at shane.reast@yahoo.co.uk for further questions!
-</h2>
 
+  <h2 class="contact-info">
+    Contact me at shane.reast@yahoo.co.uk for further questions!
+  </h2>
+
+  <!-- Accounts Placard -->
+  <div class="accounts-placard">
+    <h2>Accounts</h2>
+    <p>Here is where you'll find accounts for sale, rental options, or custom packages!</p>
+    <div class="falling-stars"></div>
+  </div>
   <div class="main-grid">
     <!-- Left Feedback (Desktop Only) -->
     <div class="feedback-card feedback-left">
@@ -283,6 +387,7 @@
   </div>
 
   <script>
+    // Modal functions
     function showModal(title, description, link) {
       document.getElementById('modal-title').textContent = title;
       document.getElementById('modal-desc').textContent = description;
@@ -294,17 +399,17 @@
       document.getElementById('modal').style.display = 'none';
     }
 
-    // Generate animated stars
+    // Generate animated background stars
     const starCount = 150;
     const starContainer = document.getElementById('stars');
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
       star.classList.add('star');
-      const size = Math.random() * 5 + 2 + 'px';
+      const size = (Math.random() * 5 + 2) + 'px';
       star.style.width = size;
       star.style.height = size;
-      star.style.top = Math.random() * 100 + '%';
-      star.style.left = Math.random() * 100 + '%';
+      star.style.top = (Math.random() * 100) + '%';
+      star.style.left = (Math.random() * 100) + '%';
       star.style.animationDuration = (Math.random() * 3 + 2) + 's';
       starContainer.appendChild(star);
     }
@@ -347,6 +452,36 @@
     }
 
     renderMobileFeedbacks();
+
+    // Falling stars animation for Accounts Placard on hover
+    const placard = document.querySelector('.accounts-placard');
+    const fallingStarsContainer = placard.querySelector('.falling-stars');
+
+    function createFallingStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = '0';
+      star.style.width = '8px';
+      star.style.height = '8px';
+      star.style.opacity = '1';
+      star.style.animation = `fall 1.2s ease-in forwards`;
+      fallingStarsContainer.appendChild(star);
+
+      star.addEventListener('animationend', () => {
+        star.remove();
+      });
+    }
+
+    let fallingInterval;
+
+    placard.addEventListener('mouseenter', () => {
+      fallingInterval = setInterval(createFallingStar, 150);
+    });
+
+    placard.addEventListener('mouseleave', () => {
+      clearInterval(fallingInterval);
+    });
   </script>
 </body>
 </html>
