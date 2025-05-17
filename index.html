@@ -5,41 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The BEST Pokemon Go store!</title>
   <style>
-    .review-card {
-  background-color: #333;
-  color: white;
-  padding: 1rem;
-  border-radius: 12px;
-  max-width: 350px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  font-style: italic;
-  flex: 1 1 100%;
-}
-
-.review-author {
-  text-align: right;
-  margin-top: 0.5rem;
-  font-weight: bold;
-  font-style: normal;
-}
-
-@media (min-width: 768px) {
-  .review-left {
-    order: -1; /* Show before products on large screens */
-    align-self: flex-start;
-  }
-
-  .review-right {
-    order: 100; /* Show after products on large screens */
-    align-self: flex-end;
-  }
-
-  .grid .review-card {
-    flex: 1 1 calc(50% - 1rem);
-    max-width: 48%;
-  }
-}
-
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -97,23 +62,6 @@
       position: relative;
     }
 
-    .accounts-placard {
-      background: #1a1a2e;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      font-weight: bold;
-      font-size: 1.2rem;
-      text-decoration: none;
-      box-shadow: 0 0 15px rgba(106, 13, 173, 0.6);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-    }
-
-    .accounts-placard:hover {
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 40px rgba(106, 13, 173, 0.9);
-      transform: scale(1.05);
-    }
-
     .grid {
       display: flex;
       flex-wrap: wrap;
@@ -137,10 +85,6 @@
       flex: 1 1 auto;
       max-width: 350px;
     }
-
-    .card:nth-child(1) { flex-basis: 350px; }
-    .card:nth-child(2) { flex-basis: 300px; }
-    .card:nth-child(3) { flex-basis: 250px; }
 
     .card:hover {
       transform: scale(1.03);
@@ -207,6 +151,58 @@
     .buy-btn:hover {
       background: #9d4edd;
     }
+
+    /* --- Reviews --- */
+    .review-side {
+      position: fixed;
+      top: 50%;
+      width: 200px;
+      transform: translateY(-50%);
+      background: #333;
+      color: white;
+      padding: 1rem;
+      border-radius: 12px;
+      font-style: italic;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+
+    .review-left {
+      left: 10px;
+    }
+
+    .review-right {
+      right: 10px;
+    }
+
+    .review-author {
+      font-weight: bold;
+      text-align: right;
+      font-style: normal;
+      margin-top: 0.5rem;
+    }
+
+    .review-mobile {
+      background: #333;
+      color: white;
+      padding: 1rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      font-style: italic;
+    }
+
+    @media (min-width: 768px) {
+      .review-mobile {
+        display: none;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .review-side {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -214,9 +210,15 @@
 
   <header>The BEST Pokemon Go Store!</header>
 
-  <!-- Centered Accounts Button -->
-  <div style="display: flex; justify-content: center; padding-top: 1rem;">
-    <a href="accounts.html" class="accounts-placard">Accounts</a>
+  <!-- Side Reviews (PC only) -->
+  <div class="review-side review-left">
+    <p class="review-text">"Absolutely amazing service! Got my Stardust super quick!"</p>
+    <p class="review-author">- Alex</p>
+  </div>
+
+  <div class="review-side review-right">
+    <p class="review-text">"Reliable and fast. Highly recommended for Pokémon GO players!"</p>
+    <p class="review-author">- Jordan</p>
   </div>
 
   <div class="grid">
@@ -231,10 +233,12 @@
         <p>1 Million stardust delivered within 2 days!</p>
       </div>
     </div>
-<!-- Review 1 -->
-<div class="review-card review-left">
-  <p class="review-text">"10/10 would recommend!!"</p>
-</div>
+
+    <!-- Mobile review appears here after product 1 -->
+    <div class="review-mobile">
+      <p class="review-text">"Absolutely amazing service! Got my Stardust super quick!"</p>
+      <p class="review-author">- Alex</p>
+    </div>
 
     <!-- Card 2 -->
     <div class="card" onclick="showModal(
@@ -260,10 +264,6 @@
       </div>
     </div>
   </div>
-<!-- Review 2 -->
-<div class="review-card review-right">
-  <p class="review-text">"Reliable and fast. Highly recommended for Pokémon GO players!"</p>
-</div>
 
   <!-- Modal -->
   <div id="modal" class="modal" onclick="hideModal()">
@@ -287,10 +287,9 @@
       document.getElementById('modal').style.display = 'none';
     }
 
-    // Generate animated stars
+    // Stars
     const starCount = 150;
     const starContainer = document.getElementById('stars');
-
     for (let i = 0; i < starCount; i++) {
       const star = document.createElement('div');
       star.classList.add('star');
