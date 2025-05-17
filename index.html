@@ -5,6 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The BEST Pokemon Go store!</title>
   <style>
+    .review-card {
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  max-width: 350px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-style: italic;
+  flex: 1 1 100%;
+}
+
+.review-author {
+  text-align: right;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-style: normal;
+}
+
+@media (min-width: 768px) {
+  .review-left {
+    order: -1; /* Show before products on large screens */
+    align-self: flex-start;
+  }
+
+  .review-right {
+    order: 100; /* Show after products on large screens */
+    align-self: flex-end;
+  }
+
+  .grid .review-card {
+    flex: 1 1 calc(50% - 1rem);
+    max-width: 48%;
+  }
+}
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -196,6 +231,10 @@
         <p>1 Million stardust delivered within 2 days!</p>
       </div>
     </div>
+<!-- Review 1 -->
+<div class="review-card review-left">
+  <p class="review-text">"10/10 would recommend!!"</p>
+</div>
 
     <!-- Card 2 -->
     <div class="card" onclick="showModal(
@@ -221,6 +260,10 @@
       </div>
     </div>
   </div>
+<!-- Review 2 -->
+<div class="review-card review-right">
+  <p class="review-text">"Reliable and fast. Highly recommended for Pokémon GO players!"</p>
+</div>
 
   <!-- Modal -->
   <div id="modal" class="modal" onclick="hideModal()">
